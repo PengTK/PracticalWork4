@@ -11,7 +11,7 @@ namespace PracticalWork4
             DateTime datePos = DateTime.Now;
             ConsoleKeyInfo key;
             Note[] notesMassive = new Note[5] { null, null, null, null, null };
-            
+
             Note note1 = new Note();
             note1.Name = "Приехать на пары";
             note1.Description = "С первой по пятую";
@@ -73,28 +73,23 @@ namespace PracticalWork4
                     case ConsoleKey.Enter:
                         if (notesMassive[position] != null)
                         {
-                            Console.Clear();
-                            Console.WriteLine(notesMassive[position].Name);
-                            Console.WriteLine("-----------------------");
-                            Console.WriteLine("Описание:  " + notesMassive[position].Description);
-                            Console.WriteLine("Дата:  " + notesMassive[position].Date.Day + "." + notesMassive[position].Date.Month + "." + notesMassive[position].Date.Year);
-                            Console.ReadKey();
+                            Info(notesMassive, position);
                         }
                         break;
                     case ConsoleKey.UpArrow:
                         if (position >= 2)
-                            position--;
+                            position = Arrow(position, -1);
                         break;
                     case ConsoleKey.DownArrow:
                         if (position < i - 1)
-                            position++;
+                            position = Arrow(position, 1);
                         break;
                     case ConsoleKey.LeftArrow:
-                        datePos = datePos.AddDays(-1);
+                        datePos = ChangeDate(-1, datePos);
                         position = 1;
                         break;
                     case ConsoleKey.RightArrow:
-                        datePos = datePos.AddDays(1);
+                        datePos = ChangeDate(1, datePos);
                         position = 1;
                         break;
                 }
@@ -102,6 +97,28 @@ namespace PracticalWork4
 
 
             }
+        }
+
+        static int Arrow(int position, int change)
+        {
+            position += change;
+            return position;
+        }
+
+        static DateTime ChangeDate(int date, DateTime datePos)
+        {
+            datePos = datePos.AddDays(date);
+            return datePos;
+        }
+
+        static void Info(Note[] notesMassive, int position)
+        {
+            Console.Clear();
+            Console.WriteLine(notesMassive[position].Name);
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("Описание:  " + notesMassive[position].Description);
+            Console.WriteLine("Дата:  " + notesMassive[position].Date.Day + "." + notesMassive[position].Date.Month + "." + notesMassive[position].Date.Year);
+            Console.ReadKey();
         }
     }
 }
